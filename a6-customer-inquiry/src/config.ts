@@ -102,14 +102,24 @@ export function buildState(input: {
   channel: Channel;
   customerTier: CustomerTier;
   orderId?: string | undefined;
+  /** Retrieved platform policy. Omitted in the A6 baseline, supplied in A7. */
+  context?: readonly string[] | undefined;
 }): string {
-  return [
+  const lines = [
+    input.context?.length
+      ? [
+          "Relevant platform policy (retrieved, authoritative):",
+          ...input.context.map((record) => `- ${record}`),
+          "",
+        ].join("\n")
+      : null,
     `Channel: ${input.channel}`,
     `Customer tier: ${input.customerTier}`,
     input.orderId ? `Related order: ${input.orderId}` : null,
     "Customer message:",
     input.message,
-  ]
+  ];
+  return lines
     .filter((line): line is string => line !== null)
     .join("\n");
 }
@@ -119,6 +129,7 @@ export function buildDecisionRequest(input: {
   channel: Channel;
   customerTier: CustomerTier;
   orderId?: string | undefined;
+  context?: readonly string[] | undefined;
 }): JevRequestBody {
   return {
     state: buildState(input),

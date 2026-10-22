@@ -1,0 +1,2038 @@
+{
+  "version": "baseline",
+  "runsPerCase": 3,
+  "complete": true,
+  "generatedAt": "2026-10-22T18:24:56.014Z",
+  "model": "typesafe-ai/jev",
+  "knowledgeBaseVersion": 1,
+  "price": {
+    "usdPerMillionInputTokens": 0.042,
+    "source": "Published TypeSafe/Jev input rate; output free"
+  },
+  "summary": {
+    "version": "baseline",
+    "cases": [
+      {
+        "caseId": "T01",
+        "type": "normal",
+        "expected": {
+          "category": "billing",
+          "urgency": 3,
+          "needsHuman": false,
+          "source": "jev"
+        },
+        "firstOutput": {
+          "inquiryId": "T01-baseline-1",
+          "category": "billing",
+          "urgency": 3,
+          "needsHuman": false,
+          "confidence": 1,
+          "source": "jev",
+          "reviewReasons": [],
+          "routing": {
+            "queue": "billing-support",
+            "slaHours": 8
+          },
+          "model": "typesafe-ai/jev",
+          "latencyMs": 458
+        },
+        "passAll": true,
+        "strictAll": true,
+        "consistent": true,
+        "passCount": 3,
+        "runs": 3
+      },
+      {
+        "caseId": "T02",
+        "type": "normal",
+        "expected": {
+          "category": "technical",
+          "urgency": 4,
+          "needsHuman": true,
+          "source": "jev"
+        },
+        "firstOutput": {
+          "inquiryId": "T02-baseline-1",
+          "category": "technical",
+          "urgency": 4,
+          "needsHuman": true,
+          "confidence": 0.99,
+          "source": "jev",
+          "reviewReasons": [
+            "critical_urgency"
+          ],
+          "routing": {
+            "queue": "technical-support",
+            "slaHours": 2
+          },
+          "model": "typesafe-ai/jev",
+          "latencyMs": 429
+        },
+        "passAll": true,
+        "strictAll": true,
+        "consistent": true,
+        "passCount": 3,
+        "runs": 3
+      },
+      {
+        "caseId": "T03",
+        "type": "normal",
+        "expected": {
+          "category": "account",
+          "urgency": 3,
+          "needsHuman": false,
+          "source": "jev"
+        },
+        "firstOutput": {
+          "inquiryId": "T03-baseline-1",
+          "category": "account",
+          "urgency": 3,
+          "needsHuman": false,
+          "confidence": 1,
+          "source": "jev",
+          "reviewReasons": [],
+          "routing": {
+            "queue": "account-security",
+            "slaHours": 8
+          },
+          "model": "typesafe-ai/jev",
+          "latencyMs": 454
+        },
+        "passAll": true,
+        "strictAll": true,
+        "consistent": true,
+        "passCount": 3,
+        "runs": 3
+      },
+      {
+        "caseId": "T04",
+        "type": "edge",
+        "expected": {
+          "category": "other",
+          "urgency": 1,
+          "needsHuman": true,
+          "source": "jev"
+        },
+        "firstOutput": {
+          "inquiryId": "T04-baseline-1",
+          "category": "billing",
+          "urgency": 1,
+          "needsHuman": true,
+          "confidence": null,
+          "source": "fallback",
+          "reviewReasons": [
+            "low_confidence"
+          ],
+          "routing": {
+            "queue": "billing-support",
+            "slaHours": 72
+          },
+          "model": null,
+          "latencyMs": 441
+        },
+        "passAll": false,
+        "strictAll": false,
+        "consistent": true,
+        "passCount": 0,
+        "runs": 3
+      },
+      {
+        "caseId": "T05",
+        "type": "edge",
+        "expected": {
+          "category": "shipping",
+          "urgency": 2,
+          "needsHuman": false,
+          "source": "jev"
+        },
+        "firstOutput": {
+          "inquiryId": "T05-baseline-1",
+          "category": "shipping",
+          "urgency": 2,
+          "needsHuman": false,
+          "confidence": 1,
+          "source": "jev",
+          "reviewReasons": [],
+          "routing": {
+            "queue": "logistics",
+            "slaHours": 24
+          },
+          "model": "typesafe-ai/jev",
+          "latencyMs": 448
+        },
+        "passAll": true,
+        "strictAll": true,
+        "consistent": true,
+        "passCount": 3,
+        "runs": 3
+      },
+      {
+        "caseId": "T06",
+        "type": "edge",
+        "expected": {
+          "category": "account",
+          "urgency": 4,
+          "needsHuman": true,
+          "source": "jev"
+        },
+        "firstOutput": {
+          "inquiryId": "T06-baseline-1",
+          "category": "account",
+          "urgency": 4,
+          "needsHuman": true,
+          "confidence": 1,
+          "source": "jev",
+          "reviewReasons": [
+            "critical_urgency",
+            "human_requested_by_model"
+          ],
+          "routing": {
+            "queue": "account-security",
+            "slaHours": 2
+          },
+          "model": "typesafe-ai/jev",
+          "latencyMs": 647
+        },
+        "passAll": true,
+        "strictAll": true,
+        "consistent": true,
+        "passCount": 3,
+        "runs": 3
+      },
+      {
+        "caseId": "T07",
+        "type": "fallback",
+        "expected": {
+          "category": "billing",
+          "urgency": null,
+          "needsHuman": true,
+          "source": "fallback"
+        },
+        "firstOutput": {
+          "inquiryId": "T07-baseline-1",
+          "category": "billing",
+          "urgency": 1,
+          "needsHuman": true,
+          "confidence": null,
+          "source": "fallback",
+          "reviewReasons": [
+            "model_unavailable"
+          ],
+          "routing": {
+            "queue": "billing-support",
+            "slaHours": 72
+          },
+          "model": null,
+          "latencyMs": 1
+        },
+        "passAll": true,
+        "strictAll": true,
+        "consistent": true,
+        "passCount": 3,
+        "runs": 3
+      },
+      {
+        "caseId": "T08",
+        "type": "fallback",
+        "expected": {
+          "category": "shipping",
+          "urgency": null,
+          "needsHuman": true,
+          "source": "fallback"
+        },
+        "firstOutput": {
+          "inquiryId": "T08-baseline-1",
+          "category": "shipping",
+          "urgency": 3,
+          "needsHuman": true,
+          "confidence": null,
+          "source": "fallback",
+          "reviewReasons": [
+            "model_timeout"
+          ],
+          "routing": {
+            "queue": "logistics",
+            "slaHours": 8
+          },
+          "model": null,
+          "latencyMs": 0
+        },
+        "passAll": true,
+        "strictAll": true,
+        "consistent": true,
+        "passCount": 3,
+        "runs": 3
+      },
+      {
+        "caseId": "T09",
+        "type": "difficult",
+        "expected": {
+          "category": "billing",
+          "urgency": 3,
+          "needsHuman": false,
+          "source": "jev"
+        },
+        "firstOutput": {
+          "inquiryId": "T09-baseline-1",
+          "category": "billing",
+          "urgency": 3,
+          "needsHuman": true,
+          "confidence": null,
+          "source": "fallback",
+          "reviewReasons": [
+            "low_confidence"
+          ],
+          "routing": {
+            "queue": "billing-support",
+            "slaHours": 8
+          },
+          "model": null,
+          "latencyMs": 438
+        },
+        "passAll": false,
+        "strictAll": false,
+        "consistent": true,
+        "passCount": 0,
+        "runs": 3
+      },
+      {
+        "caseId": "T10",
+        "type": "difficult",
+        "expected": {
+          "category": "billing",
+          "urgency": 3,
+          "needsHuman": true,
+          "source": "jev"
+        },
+        "firstOutput": {
+          "inquiryId": "T10-baseline-1",
+          "category": "shipping",
+          "urgency": 3,
+          "needsHuman": true,
+          "confidence": null,
+          "source": "fallback",
+          "reviewReasons": [
+            "low_confidence"
+          ],
+          "routing": {
+            "queue": "logistics",
+            "slaHours": 8
+          },
+          "model": null,
+          "latencyMs": 415
+        },
+        "passAll": false,
+        "strictAll": false,
+        "consistent": true,
+        "passCount": 0,
+        "runs": 3
+      }
+    ],
+    "accuracy": 70,
+    "strictAccuracy": 70,
+    "runAccuracy": 70,
+    "caseConsistency": 1,
+    "latency": {
+      "samples": 24,
+      "p50": 786,
+      "p95": 2357,
+      "modelSamples": 24,
+      "modelP50": 449,
+      "modelP95": 616
+    },
+    "cost": {
+      "modelCalls": 24,
+      "totalInputTokens": 17187,
+      "avgInputTokensPerTask": 572.9,
+      "avgInputTokensPerModelCall": 716.125,
+      "usdPerTask": 0.0000240618,
+      "usdPerThousandTasks": 0.0240618,
+      "pricePerMillionInputTokens": 0.042,
+      "outputCost": 0
+    },
+    "failures": [
+      {
+        "caseId": "T04",
+        "run": 1,
+        "actual": "billing",
+        "needsHuman": true,
+        "source": "fallback",
+        "failures": [
+          "category billing != other",
+          "source fallback != jev"
+        ]
+      },
+      {
+        "caseId": "T04",
+        "run": 2,
+        "actual": "billing",
+        "needsHuman": true,
+        "source": "fallback",
+        "failures": [
+          "category billing != other",
+          "source fallback != jev"
+        ]
+      },
+      {
+        "caseId": "T04",
+        "run": 3,
+        "actual": "billing",
+        "needsHuman": true,
+        "source": "fallback",
+        "failures": [
+          "category billing != other",
+          "source fallback != jev"
+        ]
+      },
+      {
+        "caseId": "T09",
+        "run": 1,
+        "actual": "billing",
+        "needsHuman": true,
+        "source": "fallback",
+        "failures": [
+          "needsHuman true != false",
+          "source fallback != jev"
+        ]
+      },
+      {
+        "caseId": "T09",
+        "run": 2,
+        "actual": "billing",
+        "needsHuman": true,
+        "source": "fallback",
+        "failures": [
+          "needsHuman true != false",
+          "source fallback != jev"
+        ]
+      },
+      {
+        "caseId": "T09",
+        "run": 3,
+        "actual": "billing",
+        "needsHuman": true,
+        "source": "fallback",
+        "failures": [
+          "needsHuman true != false",
+          "source fallback != jev"
+        ]
+      },
+      {
+        "caseId": "T10",
+        "run": 1,
+        "actual": "shipping",
+        "needsHuman": true,
+        "source": "fallback",
+        "failures": [
+          "category shipping != billing",
+          "source fallback != jev"
+        ]
+      },
+      {
+        "caseId": "T10",
+        "run": 2,
+        "actual": "shipping",
+        "needsHuman": true,
+        "source": "fallback",
+        "failures": [
+          "category shipping != billing",
+          "source fallback != jev"
+        ]
+      },
+      {
+        "caseId": "T10",
+        "run": 3,
+        "actual": "shipping",
+        "needsHuman": true,
+        "source": "fallback",
+        "failures": [
+          "category shipping != billing",
+          "source fallback != jev"
+        ]
+      }
+    ]
+  },
+  "results": [
+    {
+      "caseId": "T01",
+      "type": "normal",
+      "version": "baseline",
+      "run": 1,
+      "contextIds": [],
+      "contextScores": [],
+      "promptState": "Channel: email\nCustomer tier: standard\nCustomer message:\nI was charged twice for my September subscription. Please refund the duplicate charge to my card.",
+      "expected": {
+        "category": "billing",
+        "urgency": 3,
+        "needsHuman": false,
+        "source": "jev"
+      },
+      "output": {
+        "inquiryId": "T01-baseline-1",
+        "category": "billing",
+        "urgency": 3,
+        "needsHuman": false,
+        "confidence": 1,
+        "source": "jev",
+        "reviewReasons": [],
+        "routing": {
+          "queue": "billing-support",
+          "slaHours": 8
+        },
+        "model": "typesafe-ai/jev",
+        "latencyMs": 458
+      },
+      "rawDecision": {
+        "category": "billing",
+        "categoryConfidence": 1,
+        "urgencyScore": 1.65,
+        "needsHumanProbability": 0.13,
+        "model": "typesafe-ai/jev",
+        "latencyMs": 458,
+        "warnings": [],
+        "usage": {
+          "inputTokens": 711,
+          "outputTokens": 85,
+          "totalTokens": 796
+        }
+      },
+      "wallMs": 981,
+      "attempts": 1,
+      "latencyExcluded": false,
+      "pass": true,
+      "strictPass": true,
+      "failures": [],
+      "strictFailures": [],
+      "timestamp": "2026-10-22T18:21:42.520Z"
+    },
+    {
+      "caseId": "T01",
+      "type": "normal",
+      "version": "baseline",
+      "run": 2,
+      "contextIds": [],
+      "contextScores": [],
+      "promptState": "Channel: email\nCustomer tier: standard\nCustomer message:\nI was charged twice for my September subscription. Please refund the duplicate charge to my card.",
+      "expected": {
+        "category": "billing",
+        "urgency": 3,
+        "needsHuman": false,
+        "source": "jev"
+      },
+      "output": {
+        "inquiryId": "T01-baseline-2",
+        "category": "billing",
+        "urgency": 3,
+        "needsHuman": false,
+        "confidence": 1,
+        "source": "jev",
+        "reviewReasons": [],
+        "routing": {
+          "queue": "billing-support",
+          "slaHours": 8
+        },
+        "model": "typesafe-ai/jev",
+        "latencyMs": 509
+      },
+      "rawDecision": {
+        "category": "billing",
+        "categoryConfidence": 1,
+        "urgencyScore": 1.65,
+        "needsHumanProbability": 0.13,
+        "model": "typesafe-ai/jev",
+        "latencyMs": 509,
+        "warnings": [],
+        "usage": {
+          "inputTokens": 711,
+          "outputTokens": 85,
+          "totalTokens": 796
+        }
+      },
+      "wallMs": 956,
+      "attempts": 1,
+      "latencyExcluded": false,
+      "pass": true,
+      "strictPass": true,
+      "failures": [],
+      "strictFailures": [],
+      "timestamp": "2026-10-22T18:21:50.487Z"
+    },
+    {
+      "caseId": "T01",
+      "type": "normal",
+      "version": "baseline",
+      "run": 3,
+      "contextIds": [],
+      "contextScores": [],
+      "promptState": "Channel: email\nCustomer tier: standard\nCustomer message:\nI was charged twice for my September subscription. Please refund the duplicate charge to my card.",
+      "expected": {
+        "category": "billing",
+        "urgency": 3,
+        "needsHuman": false,
+        "source": "jev"
+      },
+      "output": {
+        "inquiryId": "T01-baseline-3",
+        "category": "billing",
+        "urgency": 3,
+        "needsHuman": false,
+        "confidence": 1,
+        "source": "jev",
+        "reviewReasons": [],
+        "routing": {
+          "queue": "billing-support",
+          "slaHours": 8
+        },
+        "model": "typesafe-ai/jev",
+        "latencyMs": 434
+      },
+      "rawDecision": {
+        "category": "billing",
+        "categoryConfidence": 1,
+        "urgencyScore": 1.71,
+        "needsHumanProbability": 0.12,
+        "model": "typesafe-ai/jev",
+        "latencyMs": 434,
+        "warnings": [],
+        "usage": {
+          "inputTokens": 711,
+          "outputTokens": 85,
+          "totalTokens": 796
+        }
+      },
+      "wallMs": 901,
+      "attempts": 1,
+      "latencyExcluded": false,
+      "pass": true,
+      "strictPass": true,
+      "failures": [],
+      "strictFailures": [],
+      "timestamp": "2026-10-22T18:21:58.396Z"
+    },
+    {
+      "caseId": "T02",
+      "type": "normal",
+      "version": "baseline",
+      "run": 1,
+      "contextIds": [],
+      "contextScores": [],
+      "promptState": "Channel: web_form\nCustomer tier: premium\nCustomer message:\nCheckout fails with a 500 error every time I click Pay. I have tried three browsers, and customers cannot complete any orders right now.",
+      "expected": {
+        "category": "technical",
+        "urgency": 4,
+        "needsHuman": true,
+        "source": "jev"
+      },
+      "output": {
+        "inquiryId": "T02-baseline-1",
+        "category": "technical",
+        "urgency": 4,
+        "needsHuman": true,
+        "confidence": 0.99,
+        "source": "jev",
+        "reviewReasons": [
+          "critical_urgency"
+        ],
+        "routing": {
+          "queue": "technical-support",
+          "slaHours": 2
+        },
+        "model": "typesafe-ai/jev",
+        "latencyMs": 429
+      },
+      "rawDecision": {
+        "category": "technical",
+        "categoryConfidence": 0.99,
+        "urgencyScore": 2.93,
+        "needsHumanProbability": 0.24,
+        "model": "typesafe-ai/jev",
+        "latencyMs": 429,
+        "warnings": [],
+        "usage": {
+          "inputTokens": 724,
+          "outputTokens": 85,
+          "totalTokens": 809
+        }
+      },
+      "wallMs": 1449,
+      "attempts": 1,
+      "latencyExcluded": false,
+      "pass": true,
+      "strictPass": true,
+      "failures": [],
+      "strictFailures": [],
+      "timestamp": "2026-10-22T18:22:06.859Z"
+    },
+    {
+      "caseId": "T02",
+      "type": "normal",
+      "version": "baseline",
+      "run": 2,
+      "contextIds": [],
+      "contextScores": [],
+      "promptState": "Channel: web_form\nCustomer tier: premium\nCustomer message:\nCheckout fails with a 500 error every time I click Pay. I have tried three browsers, and customers cannot complete any orders right now.",
+      "expected": {
+        "category": "technical",
+        "urgency": 4,
+        "needsHuman": true,
+        "source": "jev"
+      },
+      "output": {
+        "inquiryId": "T02-baseline-2",
+        "category": "technical",
+        "urgency": 4,
+        "needsHuman": true,
+        "confidence": 0.99,
+        "source": "jev",
+        "reviewReasons": [
+          "critical_urgency"
+        ],
+        "routing": {
+          "queue": "technical-support",
+          "slaHours": 2
+        },
+        "model": "typesafe-ai/jev",
+        "latencyMs": 448
+      },
+      "rawDecision": {
+        "category": "technical",
+        "categoryConfidence": 0.99,
+        "urgencyScore": 2.92,
+        "needsHumanProbability": 0.23,
+        "model": "typesafe-ai/jev",
+        "latencyMs": 448,
+        "warnings": [],
+        "usage": {
+          "inputTokens": 724,
+          "outputTokens": 85,
+          "totalTokens": 809
+        }
+      },
+      "wallMs": 606,
+      "attempts": 1,
+      "latencyExcluded": false,
+      "pass": true,
+      "strictPass": true,
+      "failures": [],
+      "strictFailures": [],
+      "timestamp": "2026-10-22T18:22:14.470Z"
+    },
+    {
+      "caseId": "T02",
+      "type": "normal",
+      "version": "baseline",
+      "run": 3,
+      "contextIds": [],
+      "contextScores": [],
+      "promptState": "Channel: web_form\nCustomer tier: premium\nCustomer message:\nCheckout fails with a 500 error every time I click Pay. I have tried three browsers, and customers cannot complete any orders right now.",
+      "expected": {
+        "category": "technical",
+        "urgency": 4,
+        "needsHuman": true,
+        "source": "jev"
+      },
+      "output": {
+        "inquiryId": "T02-baseline-3",
+        "category": "technical",
+        "urgency": 4,
+        "needsHuman": true,
+        "confidence": 0.99,
+        "source": "jev",
+        "reviewReasons": [
+          "critical_urgency"
+        ],
+        "routing": {
+          "queue": "technical-support",
+          "slaHours": 2
+        },
+        "model": "typesafe-ai/jev",
+        "latencyMs": 415
+      },
+      "rawDecision": {
+        "category": "technical",
+        "categoryConfidence": 0.99,
+        "urgencyScore": 2.93,
+        "needsHumanProbability": 0.24,
+        "model": "typesafe-ai/jev",
+        "latencyMs": 415,
+        "warnings": [],
+        "usage": {
+          "inputTokens": 724,
+          "outputTokens": 85,
+          "totalTokens": 809
+        }
+      },
+      "wallMs": 2250,
+      "attempts": 1,
+      "latencyExcluded": false,
+      "pass": true,
+      "strictPass": true,
+      "failures": [],
+      "strictFailures": [],
+      "timestamp": "2026-10-22T18:22:23.733Z"
+    },
+    {
+      "caseId": "T03",
+      "type": "normal",
+      "version": "baseline",
+      "run": 1,
+      "contextIds": [],
+      "contextScores": [],
+      "promptState": "Channel: chat\nCustomer tier: standard\nCustomer message:\nI can't log in. The password reset email never arrives, so I'm locked out of my account.",
+      "expected": {
+        "category": "account",
+        "urgency": 3,
+        "needsHuman": false,
+        "source": "jev"
+      },
+      "output": {
+        "inquiryId": "T03-baseline-1",
+        "category": "account",
+        "urgency": 3,
+        "needsHuman": false,
+        "confidence": 1,
+        "source": "jev",
+        "reviewReasons": [],
+        "routing": {
+          "queue": "account-security",
+          "slaHours": 8
+        },
+        "model": "typesafe-ai/jev",
+        "latencyMs": 454
+      },
+      "rawDecision": {
+        "category": "account",
+        "categoryConfidence": 1,
+        "urgencyScore": 2.03,
+        "needsHumanProbability": 0.27,
+        "model": "typesafe-ai/jev",
+        "latencyMs": 454,
+        "warnings": [],
+        "usage": {
+          "inputTokens": 715,
+          "outputTokens": 85,
+          "totalTokens": 800
+        }
+      },
+      "wallMs": 800,
+      "attempts": 1,
+      "latencyExcluded": false,
+      "pass": true,
+      "strictPass": true,
+      "failures": [],
+      "strictFailures": [],
+      "timestamp": "2026-10-22T18:22:31.537Z"
+    },
+    {
+      "caseId": "T03",
+      "type": "normal",
+      "version": "baseline",
+      "run": 2,
+      "contextIds": [],
+      "contextScores": [],
+      "promptState": "Channel: chat\nCustomer tier: standard\nCustomer message:\nI can't log in. The password reset email never arrives, so I'm locked out of my account.",
+      "expected": {
+        "category": "account",
+        "urgency": 3,
+        "needsHuman": false,
+        "source": "jev"
+      },
+      "output": {
+        "inquiryId": "T03-baseline-2",
+        "category": "account",
+        "urgency": 3,
+        "needsHuman": false,
+        "confidence": 1,
+        "source": "jev",
+        "reviewReasons": [],
+        "routing": {
+          "queue": "account-security",
+          "slaHours": 8
+        },
+        "model": "typesafe-ai/jev",
+        "latencyMs": 543
+      },
+      "rawDecision": {
+        "category": "account",
+        "categoryConfidence": 1,
+        "urgencyScore": 2.02,
+        "needsHumanProbability": 0.26,
+        "model": "typesafe-ai/jev",
+        "latencyMs": 543,
+        "warnings": [],
+        "usage": {
+          "inputTokens": 715,
+          "outputTokens": 85,
+          "totalTokens": 800
+        }
+      },
+      "wallMs": 759,
+      "attempts": 1,
+      "latencyExcluded": false,
+      "pass": true,
+      "strictPass": true,
+      "failures": [],
+      "strictFailures": [],
+      "timestamp": "2026-10-22T18:22:39.297Z"
+    },
+    {
+      "caseId": "T03",
+      "type": "normal",
+      "version": "baseline",
+      "run": 3,
+      "contextIds": [],
+      "contextScores": [],
+      "promptState": "Channel: chat\nCustomer tier: standard\nCustomer message:\nI can't log in. The password reset email never arrives, so I'm locked out of my account.",
+      "expected": {
+        "category": "account",
+        "urgency": 3,
+        "needsHuman": false,
+        "source": "jev"
+      },
+      "output": {
+        "inquiryId": "T03-baseline-3",
+        "category": "account",
+        "urgency": 3,
+        "needsHuman": false,
+        "confidence": 1,
+        "source": "jev",
+        "reviewReasons": [],
+        "routing": {
+          "queue": "account-security",
+          "slaHours": 8
+        },
+        "model": "typesafe-ai/jev",
+        "latencyMs": 439
+      },
+      "rawDecision": {
+        "category": "account",
+        "categoryConfidence": 1,
+        "urgencyScore": 2.03,
+        "needsHumanProbability": 0.27,
+        "model": "typesafe-ai/jev",
+        "latencyMs": 439,
+        "warnings": [],
+        "usage": {
+          "inputTokens": 715,
+          "outputTokens": 85,
+          "totalTokens": 800
+        }
+      },
+      "wallMs": 603,
+      "attempts": 1,
+      "latencyExcluded": false,
+      "pass": true,
+      "strictPass": true,
+      "failures": [],
+      "strictFailures": [],
+      "timestamp": "2026-10-22T18:22:46.912Z"
+    },
+    {
+      "caseId": "T04",
+      "type": "edge",
+      "version": "baseline",
+      "run": 1,
+      "contextIds": [],
+      "contextScores": [],
+      "promptState": "Channel: web_form\nCustomer tier: standard\nCustomer message:\nDo you offer a student discount on the annual plan? I'm deciding whether to buy.",
+      "expected": {
+        "category": "other",
+        "urgency": 1,
+        "needsHuman": true,
+        "source": "jev"
+      },
+      "output": {
+        "inquiryId": "T04-baseline-1",
+        "category": "billing",
+        "urgency": 1,
+        "needsHuman": true,
+        "confidence": null,
+        "source": "fallback",
+        "reviewReasons": [
+          "low_confidence"
+        ],
+        "routing": {
+          "queue": "billing-support",
+          "slaHours": 72
+        },
+        "model": null,
+        "latencyMs": 441
+      },
+      "rawDecision": {
+        "category": "other",
+        "categoryConfidence": 0.4,
+        "urgencyScore": 1.2,
+        "needsHumanProbability": 0.05,
+        "model": "typesafe-ai/jev",
+        "latencyMs": 441,
+        "warnings": [],
+        "usage": {
+          "inputTokens": 712,
+          "outputTokens": 85,
+          "totalTokens": 797
+        }
+      },
+      "wallMs": 882,
+      "attempts": 1,
+      "latencyExcluded": false,
+      "pass": false,
+      "strictPass": false,
+      "failures": [
+        "category billing != other",
+        "source fallback != jev"
+      ],
+      "strictFailures": [
+        "category billing != other",
+        "source fallback != jev"
+      ],
+      "timestamp": "2026-10-22T18:22:54.799Z"
+    },
+    {
+      "caseId": "T04",
+      "type": "edge",
+      "version": "baseline",
+      "run": 2,
+      "contextIds": [],
+      "contextScores": [],
+      "promptState": "Channel: web_form\nCustomer tier: standard\nCustomer message:\nDo you offer a student discount on the annual plan? I'm deciding whether to buy.",
+      "expected": {
+        "category": "other",
+        "urgency": 1,
+        "needsHuman": true,
+        "source": "jev"
+      },
+      "output": {
+        "inquiryId": "T04-baseline-2",
+        "category": "billing",
+        "urgency": 1,
+        "needsHuman": true,
+        "confidence": null,
+        "source": "fallback",
+        "reviewReasons": [
+          "low_confidence"
+        ],
+        "routing": {
+          "queue": "billing-support",
+          "slaHours": 72
+        },
+        "model": null,
+        "latencyMs": 443
+      },
+      "rawDecision": {
+        "category": "other",
+        "categoryConfidence": 0.42,
+        "urgencyScore": 1.15,
+        "needsHumanProbability": 0.05,
+        "model": "typesafe-ai/jev",
+        "latencyMs": 443,
+        "warnings": [],
+        "usage": {
+          "inputTokens": 712,
+          "outputTokens": 85,
+          "totalTokens": 797
+        }
+      },
+      "wallMs": 596,
+      "attempts": 1,
+      "latencyExcluded": false,
+      "pass": false,
+      "strictPass": false,
+      "failures": [
+        "category billing != other",
+        "source fallback != jev"
+      ],
+      "strictFailures": [
+        "category billing != other",
+        "source fallback != jev"
+      ],
+      "timestamp": "2026-10-22T18:23:02.408Z"
+    },
+    {
+      "caseId": "T04",
+      "type": "edge",
+      "version": "baseline",
+      "run": 3,
+      "contextIds": [],
+      "contextScores": [],
+      "promptState": "Channel: web_form\nCustomer tier: standard\nCustomer message:\nDo you offer a student discount on the annual plan? I'm deciding whether to buy.",
+      "expected": {
+        "category": "other",
+        "urgency": 1,
+        "needsHuman": true,
+        "source": "jev"
+      },
+      "output": {
+        "inquiryId": "T04-baseline-3",
+        "category": "billing",
+        "urgency": 1,
+        "needsHuman": true,
+        "confidence": null,
+        "source": "fallback",
+        "reviewReasons": [
+          "low_confidence"
+        ],
+        "routing": {
+          "queue": "billing-support",
+          "slaHours": 72
+        },
+        "model": null,
+        "latencyMs": 433
+      },
+      "rawDecision": {
+        "category": "other",
+        "categoryConfidence": 0.44,
+        "urgencyScore": 1.23,
+        "needsHumanProbability": 0.05,
+        "model": "typesafe-ai/jev",
+        "latencyMs": 433,
+        "warnings": [],
+        "usage": {
+          "inputTokens": 712,
+          "outputTokens": 85,
+          "totalTokens": 797
+        }
+      },
+      "wallMs": 654,
+      "attempts": 1,
+      "latencyExcluded": false,
+      "pass": false,
+      "strictPass": false,
+      "failures": [
+        "category billing != other",
+        "source fallback != jev"
+      ],
+      "strictFailures": [
+        "category billing != other",
+        "source fallback != jev"
+      ],
+      "timestamp": "2026-10-22T18:23:10.075Z"
+    },
+    {
+      "caseId": "T05",
+      "type": "edge",
+      "version": "baseline",
+      "run": 1,
+      "contextIds": [],
+      "contextScores": [],
+      "promptState": "Channel: email\nCustomer tier: standard\nRelated order: 48231\nCustomer message:\nMy lamp arrived damaged. I want a replacement, not a refund.",
+      "expected": {
+        "category": "shipping",
+        "urgency": 2,
+        "needsHuman": false,
+        "source": "jev"
+      },
+      "output": {
+        "inquiryId": "T05-baseline-1",
+        "category": "shipping",
+        "urgency": 2,
+        "needsHuman": false,
+        "confidence": 1,
+        "source": "jev",
+        "reviewReasons": [],
+        "routing": {
+          "queue": "logistics",
+          "slaHours": 24
+        },
+        "model": "typesafe-ai/jev",
+        "latencyMs": 448
+      },
+      "rawDecision": {
+        "category": "shipping",
+        "categoryConfidence": 1,
+        "urgencyScore": 1.07,
+        "needsHumanProbability": 0.11,
+        "model": "typesafe-ai/jev",
+        "latencyMs": 448,
+        "warnings": [],
+        "usage": {
+          "inputTokens": 717,
+          "outputTokens": 85,
+          "totalTokens": 802
+        }
+      },
+      "wallMs": 594,
+      "attempts": 1,
+      "latencyExcluded": false,
+      "pass": true,
+      "strictPass": true,
+      "failures": [],
+      "strictFailures": [],
+      "timestamp": "2026-10-22T18:23:17.677Z"
+    },
+    {
+      "caseId": "T05",
+      "type": "edge",
+      "version": "baseline",
+      "run": 2,
+      "contextIds": [],
+      "contextScores": [],
+      "promptState": "Channel: email\nCustomer tier: standard\nRelated order: 48231\nCustomer message:\nMy lamp arrived damaged. I want a replacement, not a refund.",
+      "expected": {
+        "category": "shipping",
+        "urgency": 2,
+        "needsHuman": false,
+        "source": "jev"
+      },
+      "output": {
+        "inquiryId": "T05-baseline-2",
+        "category": "shipping",
+        "urgency": 2,
+        "needsHuman": false,
+        "confidence": 1,
+        "source": "jev",
+        "reviewReasons": [],
+        "routing": {
+          "queue": "logistics",
+          "slaHours": 24
+        },
+        "model": "typesafe-ai/jev",
+        "latencyMs": 520
+      },
+      "rawDecision": {
+        "category": "shipping",
+        "categoryConfidence": 1,
+        "urgencyScore": 1.1,
+        "needsHumanProbability": 0.1,
+        "model": "typesafe-ai/jev",
+        "latencyMs": 520,
+        "warnings": [],
+        "usage": {
+          "inputTokens": 717,
+          "outputTokens": 85,
+          "totalTokens": 802
+        }
+      },
+      "wallMs": 735,
+      "attempts": 1,
+      "latencyExcluded": false,
+      "pass": true,
+      "strictPass": true,
+      "failures": [],
+      "strictFailures": [],
+      "timestamp": "2026-10-22T18:23:25.417Z"
+    },
+    {
+      "caseId": "T05",
+      "type": "edge",
+      "version": "baseline",
+      "run": 3,
+      "contextIds": [],
+      "contextScores": [],
+      "promptState": "Channel: email\nCustomer tier: standard\nRelated order: 48231\nCustomer message:\nMy lamp arrived damaged. I want a replacement, not a refund.",
+      "expected": {
+        "category": "shipping",
+        "urgency": 2,
+        "needsHuman": false,
+        "source": "jev"
+      },
+      "output": {
+        "inquiryId": "T05-baseline-3",
+        "category": "shipping",
+        "urgency": 2,
+        "needsHuman": false,
+        "confidence": 1,
+        "source": "jev",
+        "reviewReasons": [],
+        "routing": {
+          "queue": "logistics",
+          "slaHours": 24
+        },
+        "model": "typesafe-ai/jev",
+        "latencyMs": 453
+      },
+      "rawDecision": {
+        "category": "shipping",
+        "categoryConfidence": 1,
+        "urgencyScore": 1.06,
+        "needsHumanProbability": 0.09,
+        "model": "typesafe-ai/jev",
+        "latencyMs": 453,
+        "warnings": [],
+        "usage": {
+          "inputTokens": 717,
+          "outputTokens": 85,
+          "totalTokens": 802
+        }
+      },
+      "wallMs": 626,
+      "attempts": 1,
+      "latencyExcluded": false,
+      "pass": true,
+      "strictPass": true,
+      "failures": [],
+      "strictFailures": [],
+      "timestamp": "2026-10-22T18:23:33.051Z"
+    },
+    {
+      "caseId": "T06",
+      "type": "edge",
+      "version": "baseline",
+      "run": 1,
+      "contextIds": [],
+      "contextScores": [],
+      "promptState": "Channel: email\nCustomer tier: business\nCustomer message:\nSomeone accessed my account, changed the email address, and locked me out. I have contacted my lawyer.",
+      "expected": {
+        "category": "account",
+        "urgency": 4,
+        "needsHuman": true,
+        "source": "jev"
+      },
+      "output": {
+        "inquiryId": "T06-baseline-1",
+        "category": "account",
+        "urgency": 4,
+        "needsHuman": true,
+        "confidence": 1,
+        "source": "jev",
+        "reviewReasons": [
+          "critical_urgency",
+          "human_requested_by_model"
+        ],
+        "routing": {
+          "queue": "account-security",
+          "slaHours": 2
+        },
+        "model": "typesafe-ai/jev",
+        "latencyMs": 647
+      },
+      "rawDecision": {
+        "category": "account",
+        "categoryConfidence": 1,
+        "urgencyScore": 2.99,
+        "needsHumanProbability": 0.98,
+        "model": "typesafe-ai/jev",
+        "latencyMs": 647,
+        "warnings": [],
+        "usage": {
+          "inputTokens": 714,
+          "outputTokens": 85,
+          "totalTokens": 799
+        }
+      },
+      "wallMs": 833,
+      "attempts": 1,
+      "latencyExcluded": false,
+      "pass": true,
+      "strictPass": true,
+      "failures": [],
+      "strictFailures": [],
+      "timestamp": "2026-10-22T18:23:40.889Z"
+    },
+    {
+      "caseId": "T06",
+      "type": "edge",
+      "version": "baseline",
+      "run": 2,
+      "contextIds": [],
+      "contextScores": [],
+      "promptState": "Channel: email\nCustomer tier: business\nCustomer message:\nSomeone accessed my account, changed the email address, and locked me out. I have contacted my lawyer.",
+      "expected": {
+        "category": "account",
+        "urgency": 4,
+        "needsHuman": true,
+        "source": "jev"
+      },
+      "output": {
+        "inquiryId": "T06-baseline-2",
+        "category": "account",
+        "urgency": 4,
+        "needsHuman": true,
+        "confidence": 1,
+        "source": "jev",
+        "reviewReasons": [
+          "critical_urgency",
+          "human_requested_by_model"
+        ],
+        "routing": {
+          "queue": "account-security",
+          "slaHours": 2
+        },
+        "model": "typesafe-ai/jev",
+        "latencyMs": 578
+      },
+      "rawDecision": {
+        "category": "account",
+        "categoryConfidence": 1,
+        "urgencyScore": 2.99,
+        "needsHumanProbability": 0.98,
+        "model": "typesafe-ai/jev",
+        "latencyMs": 578,
+        "warnings": [],
+        "usage": {
+          "inputTokens": 714,
+          "outputTokens": 85,
+          "totalTokens": 799
+        }
+      },
+      "wallMs": 771,
+      "attempts": 1,
+      "latencyExcluded": false,
+      "pass": true,
+      "strictPass": true,
+      "failures": [],
+      "strictFailures": [],
+      "timestamp": "2026-10-22T18:23:48.668Z"
+    },
+    {
+      "caseId": "T06",
+      "type": "edge",
+      "version": "baseline",
+      "run": 3,
+      "contextIds": [],
+      "contextScores": [],
+      "promptState": "Channel: email\nCustomer tier: business\nCustomer message:\nSomeone accessed my account, changed the email address, and locked me out. I have contacted my lawyer.",
+      "expected": {
+        "category": "account",
+        "urgency": 4,
+        "needsHuman": true,
+        "source": "jev"
+      },
+      "output": {
+        "inquiryId": "T06-baseline-3",
+        "category": "account",
+        "urgency": 4,
+        "needsHuman": true,
+        "confidence": 1,
+        "source": "jev",
+        "reviewReasons": [
+          "critical_urgency",
+          "human_requested_by_model"
+        ],
+        "routing": {
+          "queue": "account-security",
+          "slaHours": 2
+        },
+        "model": "typesafe-ai/jev",
+        "latencyMs": 445
+      },
+      "rawDecision": {
+        "category": "account",
+        "categoryConfidence": 1,
+        "urgencyScore": 2.99,
+        "needsHumanProbability": 0.98,
+        "model": "typesafe-ai/jev",
+        "latencyMs": 445,
+        "warnings": [],
+        "usage": {
+          "inputTokens": 714,
+          "outputTokens": 85,
+          "totalTokens": 799
+        }
+      },
+      "wallMs": 902,
+      "attempts": 1,
+      "latencyExcluded": false,
+      "pass": true,
+      "strictPass": true,
+      "failures": [],
+      "strictFailures": [],
+      "timestamp": "2026-10-22T18:23:56.575Z"
+    },
+    {
+      "caseId": "T07",
+      "type": "fallback",
+      "version": "baseline",
+      "run": 1,
+      "contextIds": [],
+      "contextScores": [],
+      "promptState": "Channel: email\nCustomer tier: standard\nCustomer message:\nI was charged twice for my subscription and want a refund.",
+      "expected": {
+        "category": "billing",
+        "urgency": null,
+        "needsHuman": true,
+        "source": "fallback"
+      },
+      "output": {
+        "inquiryId": "T07-baseline-1",
+        "category": "billing",
+        "urgency": 1,
+        "needsHuman": true,
+        "confidence": null,
+        "source": "fallback",
+        "reviewReasons": [
+          "model_unavailable"
+        ],
+        "routing": {
+          "queue": "billing-support",
+          "slaHours": 72
+        },
+        "model": null,
+        "latencyMs": 1
+      },
+      "rawDecision": null,
+      "wallMs": 1,
+      "attempts": 1,
+      "latencyExcluded": true,
+      "pass": true,
+      "strictPass": true,
+      "failures": [],
+      "strictFailures": [],
+      "timestamp": "2026-10-22T18:24:03.578Z"
+    },
+    {
+      "caseId": "T07",
+      "type": "fallback",
+      "version": "baseline",
+      "run": 2,
+      "contextIds": [],
+      "contextScores": [],
+      "promptState": "Channel: email\nCustomer tier: standard\nCustomer message:\nI was charged twice for my subscription and want a refund.",
+      "expected": {
+        "category": "billing",
+        "urgency": null,
+        "needsHuman": true,
+        "source": "fallback"
+      },
+      "output": {
+        "inquiryId": "T07-baseline-2",
+        "category": "billing",
+        "urgency": 1,
+        "needsHuman": true,
+        "confidence": null,
+        "source": "fallback",
+        "reviewReasons": [
+          "model_unavailable"
+        ],
+        "routing": {
+          "queue": "billing-support",
+          "slaHours": 72
+        },
+        "model": null,
+        "latencyMs": 0
+      },
+      "rawDecision": null,
+      "wallMs": 0,
+      "attempts": 1,
+      "latencyExcluded": true,
+      "pass": true,
+      "strictPass": true,
+      "failures": [],
+      "strictFailures": [],
+      "timestamp": "2026-10-22T18:24:03.581Z"
+    },
+    {
+      "caseId": "T07",
+      "type": "fallback",
+      "version": "baseline",
+      "run": 3,
+      "contextIds": [],
+      "contextScores": [],
+      "promptState": "Channel: email\nCustomer tier: standard\nCustomer message:\nI was charged twice for my subscription and want a refund.",
+      "expected": {
+        "category": "billing",
+        "urgency": null,
+        "needsHuman": true,
+        "source": "fallback"
+      },
+      "output": {
+        "inquiryId": "T07-baseline-3",
+        "category": "billing",
+        "urgency": 1,
+        "needsHuman": true,
+        "confidence": null,
+        "source": "fallback",
+        "reviewReasons": [
+          "model_unavailable"
+        ],
+        "routing": {
+          "queue": "billing-support",
+          "slaHours": 72
+        },
+        "model": null,
+        "latencyMs": 0
+      },
+      "rawDecision": null,
+      "wallMs": 0,
+      "attempts": 1,
+      "latencyExcluded": true,
+      "pass": true,
+      "strictPass": true,
+      "failures": [],
+      "strictFailures": [],
+      "timestamp": "2026-10-22T18:24:03.583Z"
+    },
+    {
+      "caseId": "T08",
+      "type": "fallback",
+      "version": "baseline",
+      "run": 1,
+      "contextIds": [],
+      "contextScores": [],
+      "promptState": "Channel: email\nCustomer tier: standard\nCustomer message:\nWhere is my parcel? The tracking has not updated for a week.",
+      "expected": {
+        "category": "shipping",
+        "urgency": null,
+        "needsHuman": true,
+        "source": "fallback"
+      },
+      "output": {
+        "inquiryId": "T08-baseline-1",
+        "category": "shipping",
+        "urgency": 3,
+        "needsHuman": true,
+        "confidence": null,
+        "source": "fallback",
+        "reviewReasons": [
+          "model_timeout"
+        ],
+        "routing": {
+          "queue": "logistics",
+          "slaHours": 8
+        },
+        "model": null,
+        "latencyMs": 0
+      },
+      "rawDecision": null,
+      "wallMs": 1,
+      "attempts": 1,
+      "latencyExcluded": true,
+      "pass": true,
+      "strictPass": true,
+      "failures": [],
+      "strictFailures": [],
+      "timestamp": "2026-10-22T18:24:03.586Z"
+    },
+    {
+      "caseId": "T08",
+      "type": "fallback",
+      "version": "baseline",
+      "run": 2,
+      "contextIds": [],
+      "contextScores": [],
+      "promptState": "Channel: email\nCustomer tier: standard\nCustomer message:\nWhere is my parcel? The tracking has not updated for a week.",
+      "expected": {
+        "category": "shipping",
+        "urgency": null,
+        "needsHuman": true,
+        "source": "fallback"
+      },
+      "output": {
+        "inquiryId": "T08-baseline-2",
+        "category": "shipping",
+        "urgency": 3,
+        "needsHuman": true,
+        "confidence": null,
+        "source": "fallback",
+        "reviewReasons": [
+          "model_timeout"
+        ],
+        "routing": {
+          "queue": "logistics",
+          "slaHours": 8
+        },
+        "model": null,
+        "latencyMs": 0
+      },
+      "rawDecision": null,
+      "wallMs": 0,
+      "attempts": 1,
+      "latencyExcluded": true,
+      "pass": true,
+      "strictPass": true,
+      "failures": [],
+      "strictFailures": [],
+      "timestamp": "2026-10-22T18:24:03.589Z"
+    },
+    {
+      "caseId": "T08",
+      "type": "fallback",
+      "version": "baseline",
+      "run": 3,
+      "contextIds": [],
+      "contextScores": [],
+      "promptState": "Channel: email\nCustomer tier: standard\nCustomer message:\nWhere is my parcel? The tracking has not updated for a week.",
+      "expected": {
+        "category": "shipping",
+        "urgency": null,
+        "needsHuman": true,
+        "source": "fallback"
+      },
+      "output": {
+        "inquiryId": "T08-baseline-3",
+        "category": "shipping",
+        "urgency": 3,
+        "needsHuman": true,
+        "confidence": null,
+        "source": "fallback",
+        "reviewReasons": [
+          "model_timeout"
+        ],
+        "routing": {
+          "queue": "logistics",
+          "slaHours": 8
+        },
+        "model": null,
+        "latencyMs": 0
+      },
+      "rawDecision": null,
+      "wallMs": 0,
+      "attempts": 1,
+      "latencyExcluded": true,
+      "pass": true,
+      "strictPass": true,
+      "failures": [],
+      "strictFailures": [],
+      "timestamp": "2026-10-22T18:24:03.591Z"
+    },
+    {
+      "caseId": "T09",
+      "type": "difficult",
+      "version": "baseline",
+      "run": 1,
+      "contextIds": [],
+      "contextScores": [],
+      "promptState": "Channel: email\nCustomer tier: standard\nCustomer message:\nI was charged twice this month, and I can't log in to check my invoices.",
+      "expected": {
+        "category": "billing",
+        "urgency": 3,
+        "needsHuman": false,
+        "source": "jev"
+      },
+      "output": {
+        "inquiryId": "T09-baseline-1",
+        "category": "billing",
+        "urgency": 3,
+        "needsHuman": true,
+        "confidence": null,
+        "source": "fallback",
+        "reviewReasons": [
+          "low_confidence"
+        ],
+        "routing": {
+          "queue": "billing-support",
+          "slaHours": 8
+        },
+        "model": null,
+        "latencyMs": 438
+      },
+      "rawDecision": {
+        "category": "account",
+        "categoryConfidence": 0.4,
+        "urgencyScore": 2.01,
+        "needsHumanProbability": 0.43,
+        "model": "typesafe-ai/jev",
+        "latencyMs": 438,
+        "warnings": [],
+        "usage": {
+          "inputTokens": 711,
+          "outputTokens": 85,
+          "totalTokens": 796
+        }
+      },
+      "wallMs": 682,
+      "attempts": 1,
+      "latencyExcluded": false,
+      "pass": false,
+      "strictPass": false,
+      "failures": [
+        "needsHuman true != false",
+        "source fallback != jev"
+      ],
+      "strictFailures": [
+        "needsHuman true != false",
+        "source fallback != jev"
+      ],
+      "timestamp": "2026-10-22T18:24:04.274Z"
+    },
+    {
+      "caseId": "T09",
+      "type": "difficult",
+      "version": "baseline",
+      "run": 2,
+      "contextIds": [],
+      "contextScores": [],
+      "promptState": "Channel: email\nCustomer tier: standard\nCustomer message:\nI was charged twice this month, and I can't log in to check my invoices.",
+      "expected": {
+        "category": "billing",
+        "urgency": 3,
+        "needsHuman": false,
+        "source": "jev"
+      },
+      "output": {
+        "inquiryId": "T09-baseline-2",
+        "category": "billing",
+        "urgency": 3,
+        "needsHuman": true,
+        "confidence": null,
+        "source": "fallback",
+        "reviewReasons": [
+          "low_confidence"
+        ],
+        "routing": {
+          "queue": "billing-support",
+          "slaHours": 8
+        },
+        "model": null,
+        "latencyMs": 450
+      },
+      "rawDecision": {
+        "category": "account",
+        "categoryConfidence": 0.57,
+        "urgencyScore": 2.02,
+        "needsHumanProbability": 0.43,
+        "model": "typesafe-ai/jev",
+        "latencyMs": 450,
+        "warnings": [],
+        "usage": {
+          "inputTokens": 711,
+          "outputTokens": 85,
+          "totalTokens": 796
+        }
+      },
+      "wallMs": 755,
+      "attempts": 1,
+      "latencyExcluded": false,
+      "pass": false,
+      "strictPass": false,
+      "failures": [
+        "needsHuman true != false",
+        "source fallback != jev"
+      ],
+      "strictFailures": [
+        "needsHuman true != false",
+        "source fallback != jev"
+      ],
+      "timestamp": "2026-10-22T18:24:12.044Z"
+    },
+    {
+      "caseId": "T09",
+      "type": "difficult",
+      "version": "baseline",
+      "run": 3,
+      "contextIds": [],
+      "contextScores": [],
+      "promptState": "Channel: email\nCustomer tier: standard\nCustomer message:\nI was charged twice this month, and I can't log in to check my invoices.",
+      "expected": {
+        "category": "billing",
+        "urgency": 3,
+        "needsHuman": false,
+        "source": "jev"
+      },
+      "output": {
+        "inquiryId": "T09-baseline-3",
+        "category": "billing",
+        "urgency": 3,
+        "needsHuman": true,
+        "confidence": null,
+        "source": "fallback",
+        "reviewReasons": [
+          "low_confidence"
+        ],
+        "routing": {
+          "queue": "billing-support",
+          "slaHours": 8
+        },
+        "model": null,
+        "latencyMs": 514
+      },
+      "rawDecision": {
+        "category": "account",
+        "categoryConfidence": 0.57,
+        "urgencyScore": 2.01,
+        "needsHumanProbability": 0.41,
+        "model": "typesafe-ai/jev",
+        "latencyMs": 514,
+        "warnings": [],
+        "usage": {
+          "inputTokens": 711,
+          "outputTokens": 85,
+          "totalTokens": 796
+        }
+      },
+      "wallMs": 4803,
+      "attempts": 1,
+      "latencyExcluded": false,
+      "pass": false,
+      "strictPass": false,
+      "failures": [
+        "needsHuman true != false",
+        "source fallback != jev"
+      ],
+      "strictFailures": [
+        "needsHuman true != false",
+        "source fallback != jev"
+      ],
+      "timestamp": "2026-10-22T18:24:23.865Z"
+    },
+    {
+      "caseId": "T10",
+      "type": "difficult",
+      "version": "baseline",
+      "run": 1,
+      "contextIds": [],
+      "contextScores": [],
+      "promptState": "Channel: email\nCustomer tier: standard\nRelated order: 48231\nCustomer message:\nMy order arrived damaged, I was charged twice, and now I can't log in to request a return.",
+      "expected": {
+        "category": "billing",
+        "urgency": 3,
+        "needsHuman": true,
+        "source": "jev"
+      },
+      "output": {
+        "inquiryId": "T10-baseline-1",
+        "category": "shipping",
+        "urgency": 3,
+        "needsHuman": true,
+        "confidence": null,
+        "source": "fallback",
+        "reviewReasons": [
+          "low_confidence"
+        ],
+        "routing": {
+          "queue": "logistics",
+          "slaHours": 8
+        },
+        "model": null,
+        "latencyMs": 415
+      },
+      "rawDecision": {
+        "category": "account",
+        "categoryConfidence": 0.47,
+        "urgencyScore": 2.03,
+        "needsHumanProbability": 0.63,
+        "model": "typesafe-ai/jev",
+        "latencyMs": 415,
+        "warnings": [],
+        "usage": {
+          "inputTokens": 725,
+          "outputTokens": 85,
+          "totalTokens": 810
+        }
+      },
+      "wallMs": 2357,
+      "attempts": 1,
+      "latencyExcluded": false,
+      "pass": false,
+      "strictPass": false,
+      "failures": [
+        "category shipping != billing",
+        "source fallback != jev"
+      ],
+      "strictFailures": [
+        "category shipping != billing",
+        "source fallback != jev"
+      ],
+      "timestamp": "2026-10-22T18:24:33.236Z"
+    },
+    {
+      "caseId": "T10",
+      "type": "difficult",
+      "version": "baseline",
+      "run": 2,
+      "contextIds": [],
+      "contextScores": [],
+      "promptState": "Channel: email\nCustomer tier: standard\nRelated order: 48231\nCustomer message:\nMy order arrived damaged, I was charged twice, and now I can't log in to request a return.",
+      "expected": {
+        "category": "billing",
+        "urgency": 3,
+        "needsHuman": true,
+        "source": "jev"
+      },
+      "output": {
+        "inquiryId": "T10-baseline-2",
+        "category": "shipping",
+        "urgency": 3,
+        "needsHuman": true,
+        "confidence": null,
+        "source": "fallback",
+        "reviewReasons": [
+          "low_confidence"
+        ],
+        "routing": {
+          "queue": "logistics",
+          "slaHours": 8
+        },
+        "model": null,
+        "latencyMs": 515
+      },
+      "rawDecision": {
+        "category": "account",
+        "categoryConfidence": 0.42,
+        "urgencyScore": 2.04,
+        "needsHumanProbability": 0.67,
+        "model": "typesafe-ai/jev",
+        "latencyMs": 515,
+        "warnings": [],
+        "usage": {
+          "inputTokens": 725,
+          "outputTokens": 85,
+          "totalTokens": 810
+        }
+      },
+      "wallMs": 688,
+      "attempts": 1,
+      "latencyExcluded": false,
+      "pass": false,
+      "strictPass": false,
+      "failures": [
+        "category shipping != billing",
+        "source fallback != jev"
+      ],
+      "strictFailures": [
+        "category shipping != billing",
+        "source fallback != jev"
+      ],
+      "timestamp": "2026-10-22T18:24:40.931Z"
+    },
+    {
+      "caseId": "T10",
+      "type": "difficult",
+      "version": "baseline",
+      "run": 3,
+      "contextIds": [],
+      "contextScores": [],
+      "promptState": "Channel: email\nCustomer tier: standard\nRelated order: 48231\nCustomer message:\nMy order arrived damaged, I was charged twice, and now I can't log in to request a return.",
+      "expected": {
+        "category": "billing",
+        "urgency": 3,
+        "needsHuman": true,
+        "source": "jev"
+      },
+      "output": {
+        "inquiryId": "T10-baseline-3",
+        "category": "shipping",
+        "urgency": 3,
+        "needsHuman": true,
+        "confidence": null,
+        "source": "fallback",
+        "reviewReasons": [
+          "low_confidence"
+        ],
+        "routing": {
+          "queue": "logistics",
+          "slaHours": 8
+        },
+        "model": null,
+        "latencyMs": 616
+      },
+      "rawDecision": {
+        "category": "account",
+        "categoryConfidence": 0.49,
+        "urgencyScore": 2.03,
+        "needsHumanProbability": 0.66,
+        "model": "typesafe-ai/jev",
+        "latencyMs": 616,
+        "warnings": [],
+        "usage": {
+          "inputTokens": 725,
+          "outputTokens": 85,
+          "totalTokens": 810
+        }
+      },
+      "wallMs": 1067,
+      "attempts": 1,
+      "latencyExcluded": false,
+      "pass": false,
+      "strictPass": false,
+      "failures": [
+        "category shipping != billing",
+        "source fallback != jev"
+      ],
+      "strictFailures": [
+        "category shipping != billing",
+        "source fallback != jev"
+      ],
+      "timestamp": "2026-10-22T18:24:49.001Z"
+    }
+  ]
+}

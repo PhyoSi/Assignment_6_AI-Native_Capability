@@ -100,10 +100,24 @@ export const RawJevResponse = z
         answers: z.record(z.string(), RawAnswer),
         confidence: z.record(z.string(), z.number()).optional(),
         warnings: z.array(z.string()).optional(),
+        usage: z
+          .object({
+            inputTokens: z.number().optional(),
+            outputTokens: z.number().optional(),
+            totalTokens: z.number().optional(),
+          })
+          .optional(),
       })
       .optional(),
     answers: z.record(z.string(), RawAnswer).optional(),
     confidence: z.record(z.string(), z.number()).optional(),
+    usage: z
+      .object({
+        inputTokens: z.number().optional(),
+        outputTokens: z.number().optional(),
+        totalTokens: z.number().optional(),
+      })
+      .optional(),
     model: z.string().optional(),
     latencyMs: z.number().optional(),
   })

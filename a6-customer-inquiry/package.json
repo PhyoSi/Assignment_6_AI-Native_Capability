@@ -8,7 +8,9 @@
     "dev": "tsx src/server.ts",
     "demo:fallback": "tsx scripts/fallback-demo.ts",
     "typecheck": "tsc --noEmit",
-    "report": "node scripts/build-report.mjs"
+    "report": "node scripts/build-report.mjs",
+    "eval": "tsx eval/run-eval.ts",
+    "report:a7": "node scripts/build-a7-report.mjs"
   },
   "keywords": [],
   "author": "",

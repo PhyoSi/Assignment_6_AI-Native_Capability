@@ -27,6 +27,11 @@ export interface JevDecision {
   model: string;
   latencyMs: number;
   warnings: string[];
+  usage?: {
+    inputTokens: number | null;
+    outputTokens: number | null;
+    totalTokens: number | null;
+  } | null;
 }
 
 export class JevUnavailableError extends Error {
@@ -55,6 +60,8 @@ export interface JevCallInput {
   channel: Channel;
   customerTier: CustomerTier;
   orderId?: string | undefined;
+  /** Retrieved platform policy records, already formatted as text. */
+  context?: readonly string[] | undefined;
 }
 
 export interface JevClientOptions {
@@ -187,6 +194,7 @@ function normaliseResponse(
     throw new JevInvalidResponseError("Jev response did not contain answers");
   }
   const confidenceMap = envelope.result?.confidence ?? envelope.confidence ?? {};
+  const usage = envelope.result?.usage ?? envelope.usage;
 
   const categoryAnswer = answers.category;
   if (!categoryAnswer || typeof categoryAnswer.choice !== "string") {
@@ -230,5 +238,12 @@ function normaliseResponse(
         ? envelope.latencyMs
         : options.fallbackLatencyMs,
     warnings: envelope.result?.warnings ?? [],
+    usage: usage
+      ? {
+          inputTokens: usage.inputTokens ?? null,
+          outputTokens: usage.outputTokens ?? null,
+          totalTokens: usage.totalTokens ?? null,
+        }
+      : null,
   };
 }

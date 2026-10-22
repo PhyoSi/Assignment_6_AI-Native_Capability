@@ -116,6 +116,25 @@ detects prompt-injection phrases (`ignore previous instructions`,
 | Category `other` | `category_other` | Jev label, forced human review |
 | Urgency 4 | `critical_urgency` | Jev label, forced human review |
 
+## A7 evaluation (grounding + 10-case comparison)
+
+A7 evaluates the same A6 capability, then applies exactly one change: retrieved
+policy grounding. `knowledge/knowledge-base.json` holds seven synthetic policy
+records; `src/grounding.ts` selects KB-06/KB-07 (always on) plus the top three
+queue records by keyword score and inserts them into the Jev state. The model,
+questions, thresholds, validation, and fallback are unchanged.
+
+```bash
+npm run eval   # 10 cases x 3 runs x baseline/improved -> eval/
+```
+
+The harness (`eval/run-eval.ts`) writes `eval/results-baseline.json`,
+`eval/results-improved.json`, and `eval/summary.md`, and copies the dataset to
+`../eval-cases.json`. Measured result on 2026-10-22/23 (UTC): baseline 7/10
+(70%), improved 10/10 (100%); model-call p95 616 ms → 735 ms; average input
+tokens 573 → 849. Full report: `../assignment9_submission.md`, PDF:
+`../A7_6731503082.pdf`.
+
 ## Evidence
 
 - `evidence/test-results.md` — 8 test cases, 8 passed, with the model's label,
@@ -135,6 +154,7 @@ detects prompt-injection phrases (`ignore previous instructions`,
 npm install
 npm test                 # 8 real model runs -> evidence/
 npm run demo:fallback    # degraded-mode evidence
+npm run eval             # A7 10-case baseline/improved evaluation -> eval/
 npm run dev              # http://localhost:8787
 ```
 
@@ -156,13 +176,16 @@ SIMULATE_FAILURE=1 npm run dev
 ## Structure
 
 ```
-src/config.ts        decision configuration + state builder
+src/config.ts        decision configuration + state builder (optional retrieved context)
 src/schema.ts        input/output contracts (zod)
-src/jev.ts           transports, timeouts, envelope normalisation
+src/jev.ts           transports, timeouts, envelope normalisation, usage capture
+src/grounding.ts     A7 knowledge-base retrieval and context formatting
 src/classify.ts      validation, policy, fallback orchestration
 src/fallback.ts      deterministic rules + routing
 src/server.ts        Hono HTTP API
 src/test-cases.ts    8 synthetic cases
+knowledge/knowledge-base.json  A7 policy records (KB-01..KB-07)
+eval/                A7 dataset, harness, raw results, summary
 scripts/run-tests.ts evidence harness
 scripts/fallback-demo.ts failure demonstrations
 docs/architecture.md diagram + failure boundaries
@@ -170,15 +193,16 @@ docs/architecture.md diagram + failure boundaries
 
 ## Report
 
-The filled submission is `../assignment8_submission.md`; a printable PDF is
-`../A6_6731503082.pdf`. Regenerate the HTML after editing the report:
+The filled submissions are `../assignment8_submission.md` (A6) and
+`../assignment9_submission.md` (A7); printable PDFs are `../A6_6731503082.pdf`
+and `../A7_6731503082.pdf`. Regenerate the HTML after editing either report:
 
 ```bash
-npm run report
+npm run report     # A6 -> ../assignment8_submission.html
+npm run report:a7  # A7 -> ../assignment9_submission.html
 ```
 
-Then print `../assignment8_submission.html` to PDF with a browser (A4, no
-headers/footers).
+Then print the HTML to PDF with a browser (A4, no headers/footers).
 
 ## Limitations
 

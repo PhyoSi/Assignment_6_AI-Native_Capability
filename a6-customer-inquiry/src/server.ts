@@ -2,11 +2,21 @@ import "dotenv/config";
 import { serve } from "@hono/node-server";
 import { Hono } from "hono";
 import { classifyInquiry } from "./classify.js";
+import { retrieveKnowledge } from "./grounding.js";
 import type { JevDecision } from "./jev.js";
-import { JevTimeoutError } from "./jev.js";
-import { InputValidationError } from "./schema.js";
+import { JevTimeoutError, runJevDecision } from "./jev.js";
+import { InputValidationError, type InquiryInput } from "./schema.js";
 
 const app = new Hono();
+
+/**
+ * A7 improvement: retrieve the platform policy and add it to the Jev state.
+ * The baseline A6 request sent no context; everything else is unchanged.
+ */
+function groundedDecide(input: InquiryInput) {
+  const { context } = retrieveKnowledge(input.message);
+  return runJevDecision({ ...input, context });
+}
 
 /**
  * Test hook: force a degraded path without touching production config.
@@ -53,7 +63,7 @@ app.post("/api/classify", async (c) => {
 
   try {
     const result = await classifyInquiry(body, {
-      decide: simulatedDecision(),
+      decide: simulatedDecision() ?? groundedDecide,
     });
     // Log metadata only. The customer message never enters the logs.
     console.log(

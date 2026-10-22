@@ -1,0 +1,191 @@
+{
+  "version": 1,
+  "createdAt": "2026-10-23T00:00:00.000Z",
+  "capability": "A6 customer inquiry classification (category + urgency + needs_human)",
+  "policyVersion": "knowledge-base.json v1",
+  "notes": "Expected results were fixed before the evaluation runs. T07 and T08 intentionally force a model failure (HTTP 503 / timeout) so the deterministic fallback is evaluated. T01-T06 and T09-T10 must be answered by Jev without falling back. Primary pass = category + needsHuman + source; strict pass also checks urgency.",
+  "cases": [
+    {
+      "id": "T01",
+      "type": "normal",
+      "input": {
+        "message": "I was charged twice for my September subscription. Please refund the duplicate charge to my card.",
+        "channel": "email",
+        "customerTier": "standard"
+      },
+      "expected": {
+        "category": "billing",
+        "urgency": 3,
+        "needsHuman": false,
+        "source": "jev"
+      },
+      "expectedReviewFallback": "Auto-route to billing; no human review required.",
+      "reason": "KB-01: billing owns duplicate charges and refunds. KB-07: money at risk is high urgency. No security, legal, or three-issue trigger.",
+      "forceFailure": null
+    },
+    {
+      "id": "T02",
+      "type": "normal",
+      "input": {
+        "message": "Checkout fails with a 500 error every time I click Pay. I have tried three browsers, and customers cannot complete any orders right now.",
+        "channel": "web_form",
+        "customerTier": "premium"
+      },
+      "expected": {
+        "category": "technical",
+        "urgency": 4,
+        "needsHuman": true,
+        "source": "jev"
+      },
+      "expectedReviewFallback": "Auto-route to technical; critical urgency forces human review.",
+      "reason": "KB-02: checkout failures and outages are technical. KB-07: a widespread outage is critical, and critical urgency forces human review.",
+      "forceFailure": null
+    },
+    {
+      "id": "T03",
+      "type": "normal",
+      "input": {
+        "message": "I can't log in. The password reset email never arrives, so I'm locked out of my account.",
+        "channel": "chat",
+        "customerTier": "standard"
+      },
+      "expected": {
+        "category": "account",
+        "urgency": 3,
+        "needsHuman": false,
+        "source": "jev"
+      },
+      "expectedReviewFallback": "Auto-route to account; no human review.",
+      "reason": "KB-03: login and password reset are account issues. KB-07: a blocked workflow is high urgency, but there is no security or legal signal.",
+      "forceFailure": null
+    },
+    {
+      "id": "T04",
+      "type": "edge",
+      "input": {
+        "message": "Do you offer a student discount on the annual plan? I'm deciding whether to buy.",
+        "channel": "web_form",
+        "customerTier": "standard"
+      },
+      "expected": {
+        "category": "other",
+        "urgency": 1,
+        "needsHuman": true,
+        "source": "jev"
+      },
+      "expectedReviewFallback": "Route to general triage; the A6 policy always sends the other category to human review.",
+      "reason": "KB-05: pre-sales discount and eligibility questions are general triage, not billing, because no completed charge is disputed. KB-07: informational pre-sales is low urgency. The A6 policy forces human review for the other category.",
+      "forceFailure": null
+    },
+    {
+      "id": "T05",
+      "type": "edge",
+      "input": {
+        "message": "My lamp arrived damaged. I want a replacement, not a refund.",
+        "channel": "email",
+        "customerTier": "standard",
+        "orderId": "48231"
+      },
+      "expected": {
+        "category": "shipping",
+        "urgency": 2,
+        "needsHuman": false,
+        "source": "jev"
+      },
+      "expectedReviewFallback": "Auto-route to shipping; no human review.",
+      "reason": "KB-04: damaged items and replacements are shipping. The customer explicitly declines a refund, so the billing exception in KB-01 does not apply.",
+      "forceFailure": null
+    },
+    {
+      "id": "T06",
+      "type": "edge",
+      "input": {
+        "message": "Someone accessed my account, changed the email address, and locked me out. I have contacted my lawyer.",
+        "channel": "email",
+        "customerTier": "business"
+      },
+      "expected": {
+        "category": "account",
+        "urgency": 4,
+        "needsHuman": true,
+        "source": "jev"
+      },
+      "expectedReviewFallback": "Route to account and force human review.",
+      "reason": "KB-03: account compromise is account. KB-06: security outranks every other issue. KB-07: compromise and a legal threat are critical and require human review.",
+      "forceFailure": null
+    },
+    {
+      "id": "T07",
+      "type": "fallback",
+      "input": {
+        "message": "I was charged twice for my subscription and want a refund.",
+        "channel": "email",
+        "customerTier": "standard"
+      },
+      "expected": {
+        "category": "billing",
+        "urgency": null,
+        "needsHuman": true,
+        "source": "fallback"
+      },
+      "expectedReviewFallback": "Model unavailable: deterministic fallback classifies billing and sends the case to human review.",
+      "reason": "Service-unavailable path. The fallback must not lose the ticket or route automatically while degraded; it must set source=fallback, confidence=null, and needsHuman=true.",
+      "forceFailure": "unavailable"
+    },
+    {
+      "id": "T08",
+      "type": "fallback",
+      "input": {
+        "message": "Where is my parcel? The tracking has not updated for a week.",
+        "channel": "email",
+        "customerTier": "standard"
+      },
+      "expected": {
+        "category": "shipping",
+        "urgency": null,
+        "needsHuman": true,
+        "source": "fallback"
+      },
+      "expectedReviewFallback": "Model timeout: deterministic fallback classifies shipping and sends the case to human review.",
+      "reason": "Timeout path. A slow model must not block the queue; the fallback must classify from explicit delivery terms and flag human review.",
+      "forceFailure": "timeout"
+    },
+    {
+      "id": "T09",
+      "type": "difficult",
+      "input": {
+        "message": "I was charged twice this month, and I can't log in to check my invoices.",
+        "channel": "email",
+        "customerTier": "standard"
+      },
+      "expected": {
+        "category": "billing",
+        "urgency": 3,
+        "needsHuman": false,
+        "source": "jev"
+      },
+      "expectedReviewFallback": "Auto-route to billing; no human review.",
+      "reason": "KB-06: money at risk outranks a login symptom. KB-03: login is only how the customer checks invoices, not the primary blocker. Two issues do not meet the three-issue review rule.",
+      "forceFailure": null
+    },
+    {
+      "id": "T10",
+      "type": "difficult",
+      "input": {
+        "message": "My order arrived damaged, I was charged twice, and now I can't log in to request a return.",
+        "channel": "email",
+        "customerTier": "standard",
+        "orderId": "48231"
+      },
+      "expected": {
+        "category": "billing",
+        "urgency": 3,
+        "needsHuman": true,
+        "source": "jev"
+      },
+      "expectedReviewFallback": "Route to billing and force human review.",
+      "reason": "KB-06: money at risk outranks delivery and access problems. KB-07: three distinct issues require human review; urgency is high, not critical, because there is no security, legal, or outage trigger.",
+      "forceFailure": null
+    }
+  ]
+}
