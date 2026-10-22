@@ -1,0 +1,63 @@
+================================================================
+CASE: Healthy Jev path (real model)
+SERVER: PORT=8797 SIMULATE_FAILURE=none
+REQUEST:
+{"message":"My order #48231 was supposed to arrive on Monday, but tracking has not updated in five days.","channel":"email","customerTier":"standard"}
+RESPONSE:
+{"inquiryId":"inq_0279aae5-a7f8-42da-b6df-350e1cafd8ea","category":"shipping","urgency":2,"needsHuman":false,"confidence":1,"source":"jev","reviewReasons":[],"routing":{"queue":"logistics","slaHours":24},"model":"typesafe-ai/jev","latencyMs":445}
+HTTP 200
+SERVER LOG:
+Decision API listening on http://localhost:8797
+{"event":"jev_call","transport":"playground","status":200,"latencyMs":783}
+{"event":"classified","inquiryId":"inq_0279aae5-a7f8-42da-b6df-350e1cafd8ea","category":"shipping","source":"jev","confidence":1,"needsHuman":false,"latencyMs":445,"totalMs":793}
+
+================================================================
+CASE: Invalid input is rejected before the model is called
+SERVER: PORT=8798 SIMULATE_FAILURE=none
+REQUEST:
+{"message":"help","admin":true}
+RESPONSE:
+{"error":"invalid_input","issues":[{"path":"message","message":"message must be at least 5 characters"},{"path":"","message":"Unrecognized key: \"admin\""}]}
+HTTP 400
+SERVER LOG:
+Decision API listening on http://localhost:8798
+
+================================================================
+CASE: Service unavailable -> deterministic fallback
+SERVER: PORT=8799 SIMULATE_FAILURE=1
+REQUEST:
+{"message":"My order #48231 was supposed to arrive on Monday, but tracking has not updated in five days.","channel":"email","customerTier":"standard"}
+RESPONSE:
+{"inquiryId":"inq_dc181bed-7966-4818-98b9-8b71ee611593","category":"shipping","urgency":3,"needsHuman":true,"confidence":null,"source":"fallback","reviewReasons":["model_unavailable"],"routing":{"queue":"logistics","slaHours":8},"model":null,"latencyMs":0}
+HTTP 200
+SERVER LOG:
+WARNING: degraded mode active (SIMULATE_FAILURE=1)
+{"event":"decision_failed","inquiryId":"inq_dc181bed-7966-4818-98b9-8b71ee611593","error":"Error","detail":"Simulated Jev outage"}
+{"event":"classified","inquiryId":"inq_dc181bed-7966-4818-98b9-8b71ee611593","category":"shipping","source":"fallback","confidence":null,"needsHuman":true,"latencyMs":0,"totalMs":8}
+
+================================================================
+CASE: Malformed model result (unknown label) -> fallback
+SERVER: PORT=8800 SIMULATE_FAILURE=invalid
+REQUEST:
+{"message":"I was charged twice for my subscription and need the duplicate charge refunded.","channel":"email","customerTier":"standard"}
+RESPONSE:
+{"inquiryId":"inq_d6359cfc-2069-49a4-92e3-9f4879009424","category":"billing","urgency":1,"needsHuman":true,"confidence":null,"source":"fallback","reviewReasons":["invalid_model_response"],"routing":{"queue":"billing-support","slaHours":72},"model":null,"latencyMs":0}
+HTTP 200
+SERVER LOG:
+WARNING: degraded mode active (SIMULATE_FAILURE=invalid)
+{"event":"decision_invalid","inquiryId":"inq_d6359cfc-2069-49a4-92e3-9f4879009424","error":"Unknown category label: spam"}
+{"event":"classified","inquiryId":"inq_d6359cfc-2069-49a4-92e3-9f4879009424","category":"billing","source":"fallback","confidence":null,"needsHuman":true,"latencyMs":0,"totalMs":5}
+
+================================================================
+CASE: Model timeout -> fallback
+SERVER: PORT=8801 SIMULATE_FAILURE=timeout
+REQUEST:
+{"message":"I cannot log in and the password reset email never arrives.","channel":"chat","customerTier":"standard"}
+RESPONSE:
+{"inquiryId":"inq_d7c2d160-642b-434c-b090-f1d908d8c44c","category":"account","urgency":3,"needsHuman":true,"confidence":null,"source":"fallback","reviewReasons":["model_timeout"],"routing":{"queue":"account-security","slaHours":8},"model":null,"latencyMs":0}
+HTTP 200
+SERVER LOG:
+WARNING: degraded mode active (SIMULATE_FAILURE=timeout)
+{"event":"decision_failed","inquiryId":"inq_d7c2d160-642b-434c-b090-f1d908d8c44c","error":"JevTimeoutError","detail":"Jev did not answer within 5000 ms"}
+{"event":"classified","inquiryId":"inq_d7c2d160-642b-434c-b090-f1d908d8c44c","category":"account","source":"fallback","confidence":null,"needsHuman":true,"latencyMs":0,"totalMs":6}
+

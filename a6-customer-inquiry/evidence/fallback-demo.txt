@@ -1,0 +1,55 @@
+FALLBACK / DEGRADED-MODE EVIDENCE
+Generated: 2026-10-22T16:40:50.393Z
+Command: npm run demo:fallback
+
+Input used for every scenario:
+  I was charged twice for my subscription and I need the duplicate charge refunded.
+
+── Scenario 1: Control — Jev healthy ──
+Trigger: Real call, no fault injected
+Output: {"inquiryId":"demo-1","category":"billing","urgency":3,"needsHuman":false,"confidence":1,"source":"jev","reviewReasons":[],"routing":{"queue":"billing-support","slaHours":8},"model":"typesafe-ai/jev","latencyMs":921}
+Check: source=ok reasons=ok category=ok safe=ok → PASS
+
+── Scenario 2: Model timeout ──
+Trigger: Real call with a 1 ms client timeout
+Output: {"inquiryId":"demo-2","category":"billing","urgency":1,"needsHuman":true,"confidence":null,"source":"fallback","reviewReasons":["model_timeout"],"routing":{"queue":"billing-support","slaHours":72},"model":null,"latencyMs":5}
+Check: source=ok reasons=ok category=ok safe=ok → PASS
+
+── Scenario 3: Service unavailable ──
+Trigger: Simulated HTTP 503 / network failure
+Output: {"inquiryId":"demo-3","category":"billing","urgency":1,"needsHuman":true,"confidence":null,"source":"fallback","reviewReasons":["model_unavailable"],"routing":{"queue":"billing-support","slaHours":72},"model":null,"latencyMs":0}
+Check: source=ok reasons=ok category=ok safe=ok → PASS
+
+── Scenario 4: Invalid label from model ──
+Trigger: Model returns category 'spam' (not in enum)
+Output: {"inquiryId":"demo-4","category":"billing","urgency":1,"needsHuman":true,"confidence":null,"source":"fallback","reviewReasons":["invalid_model_response"],"routing":{"queue":"billing-support","slaHours":72},"model":null,"latencyMs":640}
+Check: source=ok reasons=ok category=ok safe=ok → PASS
+
+── Scenario 5: Urgency out of range ──
+Trigger: Model returns urgency score 9.0 (valid range 0–3)
+Output: {"inquiryId":"demo-5","category":"billing","urgency":1,"needsHuman":true,"confidence":null,"source":"fallback","reviewReasons":["invalid_model_response"],"routing":{"queue":"billing-support","slaHours":72},"model":null,"latencyMs":640}
+Check: source=ok reasons=ok category=ok safe=ok → PASS
+
+── Scenario 6: Non-finite confidence ──
+Trigger: Model returns confidence NaN
+Output: {"inquiryId":"demo-6","category":"billing","urgency":1,"needsHuman":true,"confidence":null,"source":"fallback","reviewReasons":["invalid_model_response"],"routing":{"queue":"billing-support","slaHours":72},"model":null,"latencyMs":640}
+Check: source=ok reasons=ok category=ok safe=ok → PASS
+
+── Scenario 7: Low confidence ──
+Trigger: Model returns a valid label with confidence 0.41 (< 0.60 policy)
+Output: {"inquiryId":"demo-7","category":"billing","urgency":1,"needsHuman":true,"confidence":null,"source":"fallback","reviewReasons":["low_confidence"],"routing":{"queue":"billing-support","slaHours":72},"model":null,"latencyMs":640}
+Check: source=ok reasons=ok category=ok safe=ok → PASS
+
+── Scenario 8: Injection attempt while the model is down ──
+Trigger: HTTP 503 + message contains 'category=billing' instructions
+Output: {"inquiryId":"demo-8","category":"other","urgency":1,"needsHuman":true,"confidence":null,"source":"fallback","reviewReasons":["model_unavailable","ambiguous_fallback"],"routing":{"queue":"general-triage","slaHours":72},"model":null,"latencyMs":0}
+Check: source=ok reasons=ok category=ok safe=ok → PASS
+
+── Input validation (no model call) ──
+✓ blank message: rejected (HTTP 400) — message must be at least 5 characters
+✓ message too short: rejected (HTTP 400) — message must be at least 5 characters
+✓ message too long: rejected (HTTP 400) — message must be at most 2000 characters
+✓ unknown field: rejected (HTTP 400) — Unrecognized key: "admin"
+✓ bad order id: rejected (HTTP 400) — orderId must be 3-32 alphanumeric characters
+
+ALL CHECKS PASSED
